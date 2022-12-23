@@ -1,6 +1,7 @@
 import os.path
 from django.db import models
 import uuid
+from datetime import date
 
 
 # Create your models here.
@@ -51,18 +52,6 @@ class Whuus(models.Model):
     class Meta:
         ordering = ('position', )
 
-class Specials(models.Model):
-    title = models.CharField(max_length=100, unique=True)
-    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
-    position = models.PositiveSmallIntegerField(unique=True)
-    desc = models.TextField(max_length=400, blank=True)
-    is_visible = models.BooleanField(default=True)
-
-    def __str__(self):
-        return f'{self.title}: {self.position}'
-
-    class Meta:
-        ordering = ('position', )
 
 class Events(models.Model):
     def get_file_name(self, filname: str):
@@ -76,9 +65,20 @@ class Events(models.Model):
     is_visible = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     photo = models.ImageField(upload_to=get_file_name)
-
+    date_event = models.DateField(default=date.today)
     def __str__(self):
-        return f'{self.title}: {self.position}'
+        return f'{self.title}: {self.position} date: {self.date_event}'
 
     class Meta:
         ordering = ('position', )
+
+
+class Gallery(models.Model):
+    def get_file_name(self, filname: str):
+        ext = filname.strip().split('.')[-1]
+        filname = f'{uuid.uuid4()}.{ext}'
+        return os.path.join('images/gallery', filname)
+
+    photo = models.ImageField(upload_to=get_file_name)
+    desc = models.CharField(max_length=100, blank=True)
+    is_visible = models.BooleanField(default=True)
