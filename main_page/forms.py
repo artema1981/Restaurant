@@ -44,5 +44,39 @@ class UserReservationForm(forms.ModelForm):
         fields = ('name', 'phone', 'persons', 'message')
 
 
+class ContactUsForm(forms.ModelForm):
+    name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
+        'type': "text",
+        'name': "name",
+        'class': "form-control",
+        'id': "name",
+        'placeholder': "Your Name",
+        }))
 
+
+    phone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={
+        'type': "text",
+        'class': "form-control",
+        'name': "phone",
+        'id': "phone",
+        'placeholder': "Your Phone"
+        }))
+
+    subject = forms.CharField(max_length=50,widget=forms.TextInput(attrs={
+        'type': "text",
+        'name': "subject",
+        'class': "form-control",
+        'id': "subject",
+        'placeholder': "subject"
+        }))
+
+    message = forms.CharField(max_length=259, widget=forms.Textarea(attrs={
+        'class': "form-control",
+        'name': "message",
+        'rows': "5",
+        'placeholder': "Message"
+    }))
+    class Meta:
+        model = ContactForm
+        fields = ('name', 'phone', 'subject', 'message')
 
