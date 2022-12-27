@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserReservation
+from .models import UserReservation, ContactForm
 
 
 class UserReservationForm(forms.ModelForm):

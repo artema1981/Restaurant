@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import DishCategory, Dish, Events, Gallery, UserReservation, Whuus
-from .forms import UserReservationForm
+from .forms import UserReservationForm, ContactForm
 import random
 # Create your views here.
 def main_page(request):
@@ -17,6 +17,7 @@ def main_page(request):
     gallery_photos = list(Gallery.objects.filter(is_visible=True))
     gallery_photos = random.sample(gallery_photos, 8)
     form_reserve = UserReservationForm()
+    contact_form = ContactForm()
 
     return render(request, 'main_page.html', context={
         'categories': categories,
@@ -25,6 +26,7 @@ def main_page(request):
         'events': events,
         'gallery_photos': gallery_photos,
         'form_reserve': form_reserve,
+        'contact_form': contact_form,
 
     })
     # return HttpResponse('\n'.join(map(str, categories)) + '\n'.join(map(str, dishes)))

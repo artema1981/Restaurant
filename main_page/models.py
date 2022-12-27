@@ -99,3 +99,17 @@ class UserReservation(models.Model):
 
     def __str__(self):
         return f'{self.name} {self.phone}: {self.message[:20]}'
+
+class ContactForm(models.Model):
+    phone_validator = RegexValidator(regex=r'^\+?3?8?0\d{2}[- ]?(\d[ -]?){7}$', message='Phone number should be in +380xx xxx xxx xx format')
+    name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=20, validators=[phone_validator])
+    subject = models.CharField(max_length=50)
+    message = models.TextField(max_length=259, blank=True)
+    date = models.DateField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-date',)
+
+    def __str__(self):
+        return f'{self.name} {self.phone}: {self.subject[:20]}'
